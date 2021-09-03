@@ -16,10 +16,10 @@ wrangler dev
 
 The application expects to interact with a Cloudflare KV store with several values defined:
 
-Name | Description | Example Value
----------|----------|--------
-`AUTH_HEADER` |  This is a user:password pair, base64 encoded.  The word "Basic" and a space must prepend the entry.  | `Basic dXNlcm5hbWU6cGFzc3dvcmQK`
-`ENDPOINT` | The URL which Backblaze provides as the bucket endpoint. | `s3.us-west-002.backblazeb2.com` 
+| Name          | Description                                                                                         | Example Value                             |
+| ------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| `AUTH_HEADER` | This is a user:password pair, base64 encoded.  The word "Basic" and a space must prepend the entry. | `Basic dXNlcm5hbWU6cGFzc3dvcmQK`          |
+| `ENDPOINT`    | The URL for files in the bucket, either the "S3" or "Freindly" URL.  The value should **omit** the slash.     | `https://s3.us-west-002.backblazeb2.com` |
 
 
 The namespace can be named as desired, but wrangler.toml must have `binding = "kv_namespace"` as demonstrated in the example; `kv_namespace` is how the KV is accessed by the script. (according to the values of `id` and `preview_id`)
@@ -44,6 +44,15 @@ Both the username:password pair and authorization value should be treated as a *
 
 ## Deployment
 
+### Bootstrapping the KV
+
+You can use Wrangler and the supplied `./tools/init-kv.json` to initiate the KV with "placeholder" values.  It is still necessary to create the KV store (store**s** if you utilize a preview environment), then specify them by namespace with `wrangler` to instantiate them: 
+
+```bash
+wrangler kv:bulk put --namespace 12345678910 ./tools/init-kv.json
+```
+
+### Deploying the worker
 ```bash
 wrangler publish
 ```
