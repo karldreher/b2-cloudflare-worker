@@ -12,13 +12,14 @@ async function serveAsset(event) {
   const cache = caches.default
   let response = await cache.match(event.request)
   if (!response) {
+    //Set target URL
     baseURL = await getValueFromKV('ENDPOINT')
     const url = new URL(event.request.url);
     requestURL = baseURL + url.pathname
 
     response = await fetch(requestURL)
-    const headers = { "cache-control": "public, max-age=86400" }
-    response = new Response(response.body, { ...response, headers })
+    response = new Response(response.body, response)
+    response.headers.set("Cache-Control", "public,max-age=86400")
     event.waitUntil(cache.put(event.request, response.clone()))
   }
   return response
