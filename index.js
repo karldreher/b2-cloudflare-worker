@@ -18,8 +18,11 @@ async function serveAsset(event) {
     requestURL = baseURL + url.pathname
 
     response = await fetch(requestURL)
+    console.log(new Map(response.headers))
+
     response = new Response(response.body, response)
     response.headers.set("Cache-Control", "public,max-age=86400")
+
     event.waitUntil(cache.put(event.request, response.clone()))
   }
   return response
@@ -28,8 +31,8 @@ async function serveAsset(event) {
 
 async function handleRequest(event) {
   let response = await serveAsset(event)
-    if (response.status > 399) {
-      response = new Response(response.statusText, { status: response.status })
-    }
-    return response
+  if (response.status > 399) {
+    response = new Response(response.statusText, { status: response.status })
   }
+  return response
+}

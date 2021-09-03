@@ -44,6 +44,12 @@ Both the username:password pair and authorization value should be treated as a *
 
 ## Deployment
 
+### Bucket Setup 
+
+The B2 bucket settings **must** have `{"cache-control":"max-age=86400"}` set on Bucket Info(`86400` is 1 day, this can be set to the desired value) . 
+
+Default bucket settings will invalidate Cloudflare's ability to cache.  Setting this option will allow the Worker to utilize the Cloudflare CDN.
+
 ### Bootstrapping the KV
 
 You can use Wrangler and the supplied `./tools/init-kv.json` to initiate the KV with "placeholder" values.  It is still necessary to create the KV store (store**s** if you utilize a preview environment), then specify them by namespace with `wrangler` to instantiate them: 
