@@ -7,7 +7,20 @@ async function getValueFromKV(key) {
   return value;
 }
 
+async function getAuthorization(){
+  authValue = await(getValueFromKV('AUTH_HEADER'))
+  authHeader = {'Authorization': authValue}
+  account = await(fetch('https://api.backblazeb2.com/b2api/v2/b2_authorize_account', {
+    headers: authHeader
+  }))
+  console.log(JSON.stringify(account))
+
+}
+
+
 async function serveAsset(event) {
+  auth = await getAuthorization()
+  
   const url = new URL(event.request.url)
   const cache = caches.default
   let response = await cache.match(event.request)
@@ -18,8 +31,6 @@ async function serveAsset(event) {
     requestURL = baseURL + url.pathname
 
     response = await fetch(requestURL)
-    console.log(new Map(response.headers))
-
     response = new Response(response.body, response)
     response.headers.set("Cache-Control", "public,max-age=86400")
 
