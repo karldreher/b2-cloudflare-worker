@@ -18,6 +18,8 @@ async function authorizeAccount() {
       headers: authHeader,
     }
   ).then((res) => res.json());
+  //https://www.backblaze.com/b2/docs/b2_authorize_account.html
+  //Note, the auth will be valid for 24 hours.  right now this is called every time, on next update should be stored in KV and ideally cron'd
   return account;
 }
 

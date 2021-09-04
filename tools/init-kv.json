@@ -4,7 +4,7 @@
         "value": "placeholder"
     },
     {
-        "key": "ENDPOINT",
+        "key": "BUCKET_NAME",
         "value": "placeholder"
     }
 ]
