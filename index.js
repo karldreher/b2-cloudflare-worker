@@ -21,13 +21,16 @@ async function authorizeAccount(){
 
 
 async function serveAsset(event) {
-  //get api url and auth from b2
-  auth = await authorizeAccount()
-
   const url = new URL(event.request.url)
+
+  //First determine if the cache has the object already
   const cache = caches.default
   let response = await cache.match(event.request)
+
   if (!response) {
+    //get api url and auth from b2
+    auth = await authorizeAccount()
+    
     //Set target URL
     const url = new URL(event.request.url);
     //Bucket name comes from KV
@@ -42,7 +45,7 @@ async function serveAsset(event) {
     response = await fetch(requestURL, {
       headers: requestHeaders
     })
-    
+
     response = new Response(response.body, response)
     response.headers.set("Cache-Control", "public,max-age=86400")
 
