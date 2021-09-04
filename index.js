@@ -7,30 +7,42 @@ async function getValueFromKV(key) {
   return value;
 }
 
-async function getAuthorization(){
+async function authorizeAccount(){
   authValue = await(getValueFromKV('AUTH_HEADER'))
-  authHeader = {'Authorization': authValue}
-  account = await(fetch('https://api.backblazeb2.com/b2api/v2/b2_authorize_account', {
+  authHeader = {
+    'Authorization': authValue
+  }
+  const account = await fetch('https://api.backblazeb2.com/b2api/v2/b2_authorize_account', {
     headers: authHeader
-  }))
-  console.log(JSON.stringify(account))
-
+  })
+  .then( res => res.json() )
+  return account
 }
 
 
 async function serveAsset(event) {
-  auth = await getAuthorization()
-  
+  //get api url and auth from b2
+  auth = await authorizeAccount()
+
   const url = new URL(event.request.url)
   const cache = caches.default
   let response = await cache.match(event.request)
   if (!response) {
     //Set target URL
-    baseURL = await getValueFromKV('ENDPOINT')
     const url = new URL(event.request.url);
-    requestURL = baseURL + url.pathname
-
-    response = await fetch(requestURL)
+    //Bucket name comes from KV
+    bucketName = await(getValueFromKV('BUCKET_NAME'))
+    //Request URL to B2 must contain the download URL returned from authorize account, then the path /file/{bucketname}/{pathname}
+    requestURL = new URL(auth.downloadUrl + '/file/' + bucketName +  url.pathname)
+    params = { "b2CacheControl": 'public,max-age=86400'}
+    requestURL.search = new URLSearchParams(params).toString()
+    requestHeaders = {
+      "Authorization" : auth.authorizationToken,
+    }
+    response = await fetch(requestURL, {
+      headers: requestHeaders
+    })
+    
     response = new Response(response.body, response)
     response.headers.set("Cache-Control", "public,max-age=86400")
 
