@@ -19,19 +19,13 @@ The application expects to interact with a Cloudflare KV store with several valu
 | Name          | Description                                                                                         | Example Value                             |
 | ------------- | --------------------------------------------------------------------------------------------------- | ----------------------------------------- |
 | `AUTH_HEADER` | This is a user:password pair, base64 encoded.  The word "Basic" and a space must prepend the entry. See below for instructions on getting this value.  | `Basic dXNlcm5hbWU6cGFzc3dvcmQK`          |
-| `ENDPOINT`    | The URL for files in the bucket, either the "S3" or "Freindly" URL.  The value should **omit** the slash.     | `https://s3.us-west-002.backblazeb2.com` |
+| `BUCKET_NAME`    | The name of the bucket in Backblaze B2.     | `my-cool-bucket` |
 
 
 The namespace can be named as desired, but wrangler.toml must have `binding = "kv_namespace"` as demonstrated in the example; `kv_namespace` is how the KV is accessed by the script. (according to the values of `id` and `preview_id`)
 
 
 ## Deployment
-
-### Bucket Setup 
-
-The B2 bucket settings **must** have `{"cache-control":"max-age=86400"}` set on Bucket Info(`86400` is 1 day, this can be set to the desired value) . 
-
-Default bucket settings will invalidate Cloudflare's ability to cache.  Setting this option will allow the Worker to utilize the Cloudflare CDN.
 
 ### Bootstrapping the KV
 
