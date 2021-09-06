@@ -2,14 +2,13 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event));
 });
 
-async function authorizeAccount() {
-  authHeader = {
-    Authorization: AUTH_HEADER,
-  };
+async function authorizeAccount(auth) {
   const account = await fetch(
     "https://api.backblazeb2.com/b2api/v2/b2_authorize_account",
     {
-      headers: authHeader,
+      headers: {
+        Authorization: auth,
+      },
     }
   ).then((res) => res.json());
   //https://www.backblaze.com/b2/docs/b2_authorize_account.html
@@ -26,19 +25,19 @@ async function serveAsset(event) {
 
   if (!response) {
     //get api url and auth from b2
-    auth = await authorizeAccount();
+    account = await authorizeAccount(AUTH_HEADER);
 
     //Set target URL
     const url = new URL(event.request.url);
     //Bucket name comes from environment variable
     //Request URL to B2 must contain the download URL returned from authorize account, then the path /file/{bucketname}/{pathname}
     requestURL = new URL(
-      auth.downloadUrl + "/file/" + BUCKET_NAME + url.pathname
+      account.downloadUrl + "/file/" + BUCKET_NAME + url.pathname
     );
     params = { b2CacheControl: "public,max-age=86400" };
     requestURL.search = new URLSearchParams(params).toString();
     requestHeaders = {
-      Authorization: auth.authorizationToken,
+      Authorization: account.authorizationToken,
     };
     response = await fetch(requestURL, {
       headers: requestHeaders,
