@@ -2,15 +2,9 @@ addEventListener("fetch", (event) => {
   event.respondWith(handleRequest(event));
 });
 
-async function getValueFromKV(key) {
-  let value = await kv_namespace.get(key);
-  return value;
-}
-
 async function authorizeAccount() {
-  authValue = await getValueFromKV("AUTH_HEADER");
   authHeader = {
-    Authorization: authValue,
+    Authorization: AUTH_HEADER,
   };
   const account = await fetch(
     "https://api.backblazeb2.com/b2api/v2/b2_authorize_account",
@@ -36,11 +30,10 @@ async function serveAsset(event) {
 
     //Set target URL
     const url = new URL(event.request.url);
-    //Bucket name comes from KV
-    bucketName = await getValueFromKV("BUCKET_NAME");
+    //Bucket name comes from environment variable
     //Request URL to B2 must contain the download URL returned from authorize account, then the path /file/{bucketname}/{pathname}
     requestURL = new URL(
-      auth.downloadUrl + "/file/" + bucketName + url.pathname
+      auth.downloadUrl + "/file/" + BUCKET_NAME + url.pathname
     );
     params = { b2CacheControl: "public,max-age=86400" };
     requestURL.search = new URLSearchParams(params).toString();

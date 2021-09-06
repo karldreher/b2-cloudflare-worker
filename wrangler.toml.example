@@ -3,10 +3,7 @@ type = "javascript"
 
 account_id = ""
 workers_dev = true
-route = ""
-zone_id = ""
 
-[[kv_namespaces]]
-binding = "kv_namespace"
-id = ""
-preview_id = ""
+[env.dev.vars]
+BUCKET_NAME = ""
+AUTH_HEADER = ""
