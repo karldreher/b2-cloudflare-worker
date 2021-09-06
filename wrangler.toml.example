@@ -3,7 +3,3 @@ type = "javascript"
 
 account_id = ""
 workers_dev = true
-
-[env.dev.vars]
-BUCKET_NAME = ""
-AUTH_HEADER = ""

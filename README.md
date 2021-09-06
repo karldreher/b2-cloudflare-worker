@@ -11,10 +11,12 @@ Requires Wrangler.
 ```bash
 wrangler dev
 ```
+See note about [Environment Variables in Development Environment](###Environment-Variables-in-Development-Environment) below.  
+
 
 ## Environment Variables
 
-The application expects to receive environment variables from Cloudflare to set the environment.  These are specified in the `wrangler.toml.example` file in `env.dev.vars`.  Setting the variables here will help when using the Cloudflare worker using `wrangler dev`.  The variables are described below.  
+The application expects to receive environment variables from Cloudflare to set the environment.  The variables are described below.  
 
 | Name          | Description                                                                                                                                          | Example Value                    |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
@@ -29,6 +31,18 @@ wrangler secret put BUCKET_NAME
 ```
 
 The auth header should *never* be shown in plaintext, however if the bucket name is not considered secret for your deployment, you can specify this in your wrangler.toml.  
+
+### Environment Variables in Development Environment
+When using variables in conjunction with `wrangler dev`, they *must* be set according to the following.  
+
+```toml
+[vars]
+BUCKET_NAME = "my-cool-bucket"
+AUTH_HEADER = "Basic dXNlcm5hbWU6cGFzc3dvcmQK"
+```
+
+**Excercise caution** doing this, as you should only keep them in there while conducting development.  **Only** set the variables using `wrangler secret` or through the Cloudflare console.
+
 
 ## Deployment
 
