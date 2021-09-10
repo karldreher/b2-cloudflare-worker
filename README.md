@@ -2,7 +2,7 @@
 
 The purpose of this project is to provide a Cloudflare worker which **reads** from a private Backblaze B2 bucket, to provide an easy way to utilize Cloudflare as a CDN for any kind of **static** content.
 
-The service is deployed as a Cloudflare Worker and uses a Cloudflare KV store for parameters.
+The service is deployed as a Cloudflare Worker and uses environment variables for parameters.
 
 ## Running the development server
 
@@ -11,27 +11,40 @@ Requires Wrangler.
 ```bash
 wrangler dev
 ```
+See note about [Environment Variables in Development Environment](###Environment-Variables-in-Development-Environment) below.  
 
-## KV
 
-The application expects to interact with a Cloudflare KV store with several values defined:
+## Environment Variables
+
+The application expects to receive environment variables from Cloudflare to set the environment.  The variables are described below.  
 
 | Name          | Description                                                                                                                                          | Example Value                    |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | `AUTH_HEADER` | This is a user:password pair, base64 encoded. The word "Basic" and a space must prepend the entry. See below for instructions on getting this value. | `Basic dXNlcm5hbWU6cGFzc3dvcmQK` |
 | `BUCKET_NAME` | The name of the bucket in Backblaze B2.                                                                                                              | `my-cool-bucket`                 |
 
-The namespace can be named as desired, but wrangler.toml must have `binding = "kv_namespace"` as demonstrated in the example; `kv_namespace` is how the KV is accessed by the script. (according to the values of `id` and `preview_id`)
-
-## Deployment
-
-### Bootstrapping the KV
-
-You can use Wrangler and the supplied `./tools/init-kv.json` to initiate the KV with "placeholder" values. It is still necessary to create the KV store (store**s** if you utilize a preview environment), then specify them by namespace with `wrangler` to instantiate them:
+When setting these in production, it is reccomended to treat them as **secret**, therefore it is reccomended that they are set using Wrangler CLI:
 
 ```bash
-wrangler kv:bulk put --namespace 12345678910 ./tools/init-kv.json
+wrangler secret put AUTH_HEADER
+wrangler secret put BUCKET_NAME
 ```
+
+The auth header should *never* be shown in plaintext, however if the bucket name is not considered secret for your deployment, you can specify this in your wrangler.toml.  
+
+### Environment Variables in Development Environment
+When using variables in conjunction with `wrangler dev`, they *must* be set according to the following.  
+
+```toml
+[vars]
+BUCKET_NAME = "my-cool-bucket"
+AUTH_HEADER = "Basic dXNlcm5hbWU6cGFzc3dvcmQK"
+```
+
+**Excercise caution** doing this, as you should only keep them in there while conducting development.  **Only** set the variables using `wrangler secret` or through the Cloudflare console.
+
+
+## Deployment
 
 ### Generating the authorization value
 
@@ -49,9 +62,21 @@ $ echo $VALUE
 Basic dXNlcm5hbWU6cGFzc3dvcmQK
 ```
 
-Use the contents of `$VALUE` (including "Basic ") as generated following the steps above, within the KV store value `AUTH_HEADER`
+Use the contents of `$VALUE` (including "Basic ") as generated following the steps above, within the environment variable `AUTH_HEADER`.  This can be done through the Cloudflare console or using wrangler:
+
+```bash
+wrangler secret put AUTH_HEADER
+```
 
 Both the username:password pair and authorization value should be treated as a **secret**. Within Backblaze it is not possible to change or view the keys after creation, they must be regenerated as new keys!
+
+### Setting the bucket name
+
+The bucket name of the B2 bucket needs to be expressed with the environment variable `BUCKET_NAME`.  
+This can be done through the Cloudflare console or using wrangler:
+```bash
+wrangler secret put BUCKET_NAME
+```
 
 ### Deploying the worker
 

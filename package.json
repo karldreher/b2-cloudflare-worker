@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "b2-cloudflare-worker",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Cloudflare worker for caching a private Backblaze B2 bucket.",
   "main": "index.js",
   "scripts": {
