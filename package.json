@@ -1,11 +1,12 @@
 {
   "private": true,
   "name": "b2-cloudflare-worker",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Cloudflare worker for caching a private Backblaze B2 bucket.",
   "main": "index.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "dev": "wrangler dev"
   },
   "author": "Karl Dreher <karldreher@outlook.com>",
   "license": "MIT",

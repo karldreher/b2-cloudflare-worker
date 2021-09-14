@@ -93,3 +93,6 @@ The worker handles the middleware between your browser, the Cloudflare cache, an
 ```bash
 curl my-secret-bucket.example.workers.dev/pictures-of-cats/fatkitty.jpg
 ```
+
+## Testing
+See [TESTING.MD](TESTING.MD).
