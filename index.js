@@ -34,7 +34,7 @@ async function serveAsset(event) {
     requestURL = new URL(
       account.downloadUrl + "/file/" + BUCKET_NAME + url.pathname
     );
-    params = { b2CacheControl: "public,max-age=86400" };
+    params = { b2CacheControl: CACHE_CONTROL };
     requestURL.search = new URLSearchParams(params).toString();
     requestHeaders = {
       Authorization: account.authorizationToken,
@@ -44,7 +44,7 @@ async function serveAsset(event) {
     });
 
     response = new Response(response.body, response);
-    response.headers.set("Cache-Control", "public,max-age=86400");
+    response.headers.set("Cache-Control", CACHE_CONTROL);
 
     event.waitUntil(cache.put(event.request, response.clone()));
   }

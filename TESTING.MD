@@ -35,6 +35,11 @@ npm install
 npm test
 ```
 
+On occasion, the tests are prone to flaky timeouts, like described in the error below.  This is not considered a failure.  The tests can be repeated if this occurs.  (This will be fixed in a later release)
+
+>    Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (./b2-cloudflare-worker/test/test.js)
+>
+
 ## Understanding and using the results
 
 If the tests pass, congratulations! :tada:
