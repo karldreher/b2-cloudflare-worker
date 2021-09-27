@@ -22,8 +22,9 @@ The application expects to receive environment variables from Cloudflare to set 
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | `AUTH_HEADER` | This is a user:password pair, base64 encoded. The word "Basic" and a space must prepend the entry. See below for instructions on getting this value. | `Basic dXNlcm5hbWU6cGFzc3dvcmQK` |
 | `BUCKET_NAME` | The name of the bucket in Backblaze B2.                                                                                                              | `my-cool-bucket`                 |
+`CACHE_CONTROL` | The time that cache should be valid for the files in the bucket.  This affects both the B2 cache as well as Cloudflare.  It is reccomended to set this within wrangler.toml. | "public,max-age=172800"
 
-When setting these in production, it is reccomended to treat them as **secret**, therefore it is reccomended that they are set using Wrangler CLI:
+When setting `AUTH_HEADER` and `BUCKET_NAME` in production, it is reccomended to treat them as **secret**, therefore it is reccomended that they are set using Wrangler CLI:
 
 ```bash
 wrangler secret put AUTH_HEADER
@@ -39,9 +40,10 @@ When using variables in conjunction with `wrangler dev`, they *must* be set acco
 [vars]
 BUCKET_NAME = "my-cool-bucket"
 AUTH_HEADER = "Basic dXNlcm5hbWU6cGFzc3dvcmQK"
+CACHE_CONTROL = "public,max-age=172800" #This should be here anyway, it is included for completeness.
 ```
 
-**Excercise caution** doing this, as you should only keep them in there while conducting development.  **Only** set the variables using `wrangler secret` or through the Cloudflare console.
+**Excercise caution** doing this with `BUCKET_NAME` and `AUTH_HEADER`, as you should only keep those variables there while conducting development.  **Only** set the variables using `wrangler secret` or through the Cloudflare console.
 
 
 ## Deployment

@@ -3,3 +3,6 @@ type = "javascript"
 
 account_id = ""
 workers_dev = true
+
+[vars]
+CACHE_CONTROL = "public,max-age=172800"
