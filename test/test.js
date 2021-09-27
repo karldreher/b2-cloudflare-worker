@@ -1,6 +1,8 @@
 const config = require('./test.env')
 const request = require("supertest")(config.endpoint);
 const expect = require("chai").expect;
+const toml = require('toml');
+const fs = require('fs')
 
 function delay(interval) 
 {
@@ -20,16 +22,17 @@ describe("Request a valid file", function () {
     delay(5000)
    
     describe("Repeat the request", function () {
-        it('Get a cache hit', async function () {
+        it('Response gets a cache hit', async function () {
             const response = await request.get(config.filename);
             expect(response.status).to.eql(200);
             expect(response.headers['cf-cache-status']).to.equal('HIT');
         });
-        it('cache-control matches the expected result', async function () {
+        it('Response cache-control matches the configured value in wrangler.toml', async function () {
             const response = await request.get(config.filename);
             expect(response.status).to.eql(200);
             //TODO this needs to pull from the wrangler.toml file, not done yet.
-            expect(response.headers['cache-control']).to.equal('public,max-age=172800');
+            cacheControlValue = toml.parse(fs.readFileSync('./wrangler.toml')).vars.CACHE_CONTROL
+            expect(response.headers['cache-control']).to.equal(cacheControlValue);
         });
     });
 
