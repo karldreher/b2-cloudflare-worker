@@ -46,7 +46,7 @@ CACHE_CONTROL = "public,max-age=172800" #This should be here anyway, it is inclu
 1. Within Backblaze, add an application key for your bucket.
 2. Select the appropriate bucket (not "All" unless you know what you're doing)
 3. Select "Read Only"
-4. Provide a duration less than 1000 days in the future, specified in seconds. Since this will need to rotate, it is reccomended (for this application's purpose) a maximum value of `86399999`.
+4. Provide a duration less than 1000 days in the future, specified in seconds. Since this will need to rotate, it is reccomended (for this application's purpose) a maximum value of `86400000`.
 
 Upon creating the app key, use the **values** for `keyID` and `applicationKey` by Backblaze to generate the base-64 encoded Basic authorization header:
 
