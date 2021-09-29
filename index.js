@@ -3,7 +3,7 @@ addEventListener("fetch", (event) => {
 });
 
 async function authorizeAccount(auth) {
-  const account = await fetch(
+  const account = fetch(
     "https://api.backblazeb2.com/b2api/v2/b2_authorize_account",
     {
       headers: {
