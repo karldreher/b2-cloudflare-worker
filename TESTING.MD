@@ -7,7 +7,9 @@ The automated tests utilize Mocha, Supertest, and Chai.  Because of that, they a
 ## Setup
 Some manual setup is required (right now) to run the test automation.
 
-It is required to follow the instructions in [README.MD](README.md) to set up the Backblaze B2 bucket, the Application Key, and the basic setup required to test Workers in cloudflare.  This also includes setting up the wrangler.toml in the top-level of this repo. 
+It is required to follow the instructions in [README.MD](README.md) to set up the Backblaze B2 bucket, the Application Key, and the basic setup required to test Workers in cloudflare.  
+
+This also includes setting up the wrangler.toml in the top-level of this repo. When setting `CACHE_CONTROL` within wrangler.toml, it is reccomended to use a small `max-age` value (e.g. 10) so the test can be run repeatedly, while verifying that the first test gets an uncached hit.
 
 After this is done: 
 
@@ -34,6 +36,11 @@ npm run dev
 npm install
 npm test
 ```
+
+On occasion, the tests are prone to flaky timeouts, like described in the error below.  This is not considered a failure.  The tests can be repeated if this occurs.  (This will be fixed in a later release)
+
+>    Error: Timeout of 2000ms exceeded. For async tests and hooks, ensure "done()" is called; if returning a Promise, ensure it resolves. (./b2-cloudflare-worker/test/test.js)
+>
 
 ## Understanding and using the results
 

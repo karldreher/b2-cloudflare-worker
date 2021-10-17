@@ -3,3 +3,7 @@ type = "javascript"
 
 account_id = ""
 workers_dev = true
+
+[vars]
+BUCKET_NAME = "my-cool-bucket"
+CACHE_CONTROL = "public,max-age=172800"
