@@ -10,3 +10,5 @@ node_modules/
 .cargo-ok
 wrangler.toml
 test/test.env
+# Don't know if anything else in the wrangler folder is needed
+.wrangler/state
