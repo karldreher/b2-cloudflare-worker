@@ -1,6 +1,7 @@
 {
   "name": "b2-cloudflare-worker",
-  "version": "0.0.0",
+  "repository":"https://github.com/karldreher/b2-cloudflare-worker",
+  "version": "1.2.0",
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
