@@ -3,7 +3,6 @@ export default {
 
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const url = new URL(request.url);
-		console.log(env)
 		//First determine if the cache has the object already
 		const cache = caches.default
 		let response = await cache.match(request);
