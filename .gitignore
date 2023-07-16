@@ -11,3 +11,4 @@ node_modules/
 wrangler.toml
 test/test.env
 .wrangler
+.dev.vars

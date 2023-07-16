@@ -1,17 +1,17 @@
 # Testing
 
-This document gives instructions for developers to utilize the automated tests.  
+This document gives instructions for developers to utilize the automated tests.
 
 The automated tests utilize Mocha, Supertest, and Chai.  Because of that, they also require Node.js be installed.  (The project itself is raw Javascript and does not require Node.)
 
 ## Setup
 Some manual setup is required (right now) to run the test automation.
 
-It is required to follow the instructions in [README.MD](README.md) to set up the Backblaze B2 bucket, the Application Key, and the basic setup required to test Workers in cloudflare.  
+It is required to follow the instructions in [README.MD](README.md) to set up the Backblaze B2 bucket, the Application Key, and the basic setup required to test Workers in cloudflare.
 
-This also includes setting up the wrangler.toml in the top-level of this repo. When setting `CACHE_CONTROL` within wrangler.toml, it is reccomended to use a small `max-age` value (e.g. 10) so the test can be run repeatedly, while verifying that the first test gets an uncached hit.
+This also includes setting up the wrangler.toml in the top-level of this repo. When setting `CACHE_CONTROL` within wrangler.toml, it is reccomended to use a small `max-age` value (e.g. 1000) so the test can be run repeatedly, while verifying that the first test gets an uncached hit.
 
-After this is done: 
+After this is done:
 
 ```bash
 # copy the test.env.example to test.env
@@ -20,7 +20,7 @@ cp test/test.env.example test/test.env
 Configure the values within `test/test.env` as directed within the comments in the file.
 
 ## Running the automated tests
-After following the instructions above: 
+After following the instructions above:
 
 1. If working locally, start development server first
    - This must be done in a separate shell, to keep the server running.

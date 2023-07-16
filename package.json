@@ -15,6 +15,7 @@
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev",
+    "predev":"echo AUTH_HEADER=$AUTH_HEADER>.dev.vars",
     "dev": "npm run start",
     "test": "mocha"
   },

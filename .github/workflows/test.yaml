@@ -1,0 +1,26 @@
+name: Release
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  release:
+    permissions:
+    contents: write # to be able to publish a GitHub release
+    issues: write # to be able to comment on released issues
+    pull-requests: write # to be able to comment on released pull requests
+    id-token: write # to enable use of OIDC for npm provenance
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - uses: actions/setup-node@v3
+      with:
+        # File containing the version Spec of the version to use.  Examples: .nvmrc, .node-version, .tool-versions.
+        # If node-version and node-version-file are both provided the action will use version from node-version.
+        node-version-file: '.nvmrc'
+    - run: npm install
+    - run: npm run ci-prereq
+    - run: npm run test
