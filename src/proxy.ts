@@ -24,7 +24,7 @@ export default {
 			});
 			response = new Response(response.body, response);
 			response.headers.set("Cache-Control", env.CACHE_CONTROL);
-			cache.put(request, response.clone())
+			await cache.put(request, response.clone())
 			if (response) {
 				return response
 			}

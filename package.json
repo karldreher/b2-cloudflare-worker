@@ -5,11 +5,16 @@
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev",
-    "dev": "npm run start"
+    "dev": "npm run start",
+    "test": "mocha"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230710.1",
+    "chai": "^4.3.7",
     "itty-router": "^3.0.12",
+    "mocha": "^10.2.0",
+    "supertest": "^6.3.3",
+    "toml": "^3.0.0",
     "typescript": "^5.0.4",
     "wrangler": "^3.0.0"
   }
