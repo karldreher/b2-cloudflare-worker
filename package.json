@@ -1,19 +1,21 @@
 {
   "name": "b2-cloudflare-worker",
-  "repository":"https://github.com/karldreher/b2-cloudflare-worker",
+  "repository": "https://github.com/karldreher/b2-cloudflare-worker",
   "version": "1.2.0",
   "private": true,
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev",
     "dev": "npm run start",
-    "test": "mocha"
+    "test": "mocha",
+    "release":"semantic-release"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230710.1",
     "chai": "^4.3.7",
     "itty-router": "^3.0.12",
     "mocha": "^10.2.0",
+    "semantic-release": "^21.0.7",
     "supertest": "^6.3.3",
     "toml": "^3.0.0",
     "typescript": "^5.0.4",
