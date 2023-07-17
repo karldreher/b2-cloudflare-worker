@@ -18,5 +18,21 @@ jobs:
       with:
         node-version-file: '.nvmrc'
     - run: npm install
-    - run: echo $WRANGLER_TOML>wrangler.toml
+    # template wrangler.toml using marginally-secret CF Account ID
+    - run: |
+        cat << EOF > wrangler.toml
+
+        main = "src/worker.ts"
+        compatibility_date = "2023-07-10"
+        name = "b2-cloudflare-worker"
+
+        account_id = "${ACCOUNT_ID}"
+        workers_dev = true
+
+        [vars]
+        BUCKET_NAME = "cloudflare-proxy-test"
+        CACHE_CONTROL = "public,max-age=1000"
+
+        EOF
+
     - run: npm run test
