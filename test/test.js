@@ -1,4 +1,5 @@
-const config = require('./test.env')
+// Config is test.env, unless variable "CI" is set, then use ci.env.
+const config = process.env.CI ? require('./ci.env') : require('./test.env')
 const request = require("supertest")(config.endpoint);
 const expect = require("chai").expect;
 const toml = require('toml');

@@ -3,6 +3,10 @@ export default {
 
 	async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
 		const url = new URL(request.url);
+		if (url.pathname == "/"){
+			// Mostly for testing, but prevents garbage requests from going to B2
+			return new Response("ok",{status:200})
+		}
 		//First determine if the cache has the object already
 		const cache = caches.default
 		let response = await cache.match(request);

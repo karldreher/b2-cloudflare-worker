@@ -8,25 +8,26 @@
   "private": true,
   "release": {
     "branches": [
-      "main",
-      "develop"
+      "main"
     ]
   },
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev",
-    "predev":"echo AUTH_HEADER=$AUTH_HEADER>.dev.vars",
+    "predev": "echo AUTH_HEADER=$AUTH_HEADER>.dev.vars",
     "dev": "npm run start",
-    "test": "mocha"
+    "test": "concurrently --timings --success first --kill-others \"npm run dev\" \"wait-on -d 5000 -t 20000 http-get://127.0.0.1:8787 && mocha\""
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230710.1",
     "chai": "^4.3.7",
+    "concurrently": "^8.2.0",
     "itty-router": "^3.0.12",
     "mocha": "^10.2.0",
     "supertest": "^6.3.3",
     "toml": "^3.0.0",
     "typescript": "^5.0.4",
+    "wait-on": "^7.0.1",
     "wrangler": "^3.0.0"
   }
 }
