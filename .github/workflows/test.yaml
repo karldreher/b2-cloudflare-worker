@@ -26,7 +26,11 @@ jobs:
         compatibility_date = "2023-07-10"
         name = "b2-cloudflare-worker"
 
-        account_id = "${ACCOUNT_ID}"
+        EOF
+
+        echo "account_id = ${ACCOUNT_ID}">>wrangler.toml
+
+        cat << EOF > wrangler.toml
         workers_dev = true
 
         [vars]
