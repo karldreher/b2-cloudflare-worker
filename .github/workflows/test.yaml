@@ -30,7 +30,7 @@ jobs:
 
         echo "account_id = ${ACCOUNT_ID}">>wrangler.toml
 
-        cat << EOF > wrangler.toml
+        cat << EOF >> wrangler.toml
         workers_dev = true
 
         [vars]
