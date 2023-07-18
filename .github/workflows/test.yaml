@@ -34,3 +34,7 @@ jobs:
         EOF
 
     - run: npm run test-ci
+      env:
+        AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
+        CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+        CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

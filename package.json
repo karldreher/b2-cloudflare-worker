@@ -14,10 +14,9 @@
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev",
-    "start-ci":"wrangler dev --remote",
     "predev": "echo AUTH_HEADER=$AUTH_HEADER>.dev.vars",
     "dev": "npm run start",
-    "test-ci": "concurrently --timings --success first --kill-others \"npm run start-ci\" \"wait-on -d 5000 -t 20000 http-get://127.0.0.1:8787 && mocha\""
+    "test": "concurrently --timings --success first --kill-others \"npm run dev\" \"wait-on -d 5000 -t 20000 http-get://127.0.0.1:8787 && mocha\""
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230710.1",
