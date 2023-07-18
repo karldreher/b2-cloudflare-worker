@@ -22,6 +22,7 @@ export default {
 			const requestHeaders = {
 				Authorization: account.authorizationToken,
 			};
+			// Send request to Backblaze based on authorized account and configured params
 			let response = await fetch(requestURL, {
 				headers: requestHeaders,
 			});
