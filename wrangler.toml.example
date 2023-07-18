@@ -1,5 +1,6 @@
+main = "src/worker.ts"
+compatibility_date = "2023-07-10"
 name = "b2-cloudflare-worker"
-type = "javascript"
 
 account_id = ""
 workers_dev = true

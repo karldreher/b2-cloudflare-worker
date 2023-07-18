@@ -11,12 +11,12 @@ Requires Wrangler.
 ```bash
 wrangler dev
 ```
-See note about [Environment Variables in Development Environment](###Environment-Variables-in-Development-Environment) below.  
+See note about [Environment Variables in Development Environment](###Environment-Variables-in-Development-Environment) below.
 
 
 ## Environment Variables
 
-The application expects to receive environment variables from Cloudflare to set the environment.  The variables are described below.  
+The application expects to receive environment variables from Cloudflare to set the environment.  The variables are described below.
 
 | Name          | Description                                                                                                                                          | Example Value                    |
 | ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------- |
@@ -27,21 +27,29 @@ The application expects to receive environment variables from Cloudflare to set 
 See more details about setting these values in a production deployment in [Deployment](##Deployment).
 
 ### Environment Variables in Development Environment
-When using variables in conjunction with `wrangler dev`, they *must* be set according to the following.  
+When using variables in conjunction with `wrangler dev`, they *must* be set according to the following.
 
 ```toml
 [vars]
 BUCKET_NAME = "my-cool-bucket"
-AUTH_HEADER = "Basic dXNlcm5hbWU6cGFzc3dvcmQK"
 CACHE_CONTROL = "public,max-age=172800" #This should be here anyway, it is included for completeness.
 ```
 
-**Excercise caution** doing this with `AUTH_HEADER`, as you should only keep this variable there while conducting development.  **Only** set the variables using `wrangler secret` or through the Cloudflare console.
+While developing locally, it is appropriate to set AUTH_HEADER as an environment variable, which will be passed to wrangler appropriately using `predev` script in package.json.
+Example:
+```
+export AUTH_HEADER="BASIC dXNlcm5hbWU6cGFzc3dvcmQK
+npm run dev
+```
+
 
 
 ## Deployment
+### Cloudflare - Prereqs
+You will need a `CLOUDFLARE_API_TOKEN` set as an environment variable.  It is recommended to use the "Edit Workers" template.
 
-### Generating the authorization value
+
+### B2 - Generating the authorization value
 
 1. Within Backblaze, add an application key for your bucket.
 2. Select the appropriate bucket (not "All" unless you know what you're doing)
@@ -67,7 +75,7 @@ Both the username:password pair and authorization value should be treated as a *
 
 ### Setting the bucket name
 
-The bucket name of the B2 bucket needs to be expressed with the environment variable `BUCKET_NAME`.  
+The bucket name of the B2 bucket needs to be expressed with the environment variable `BUCKET_NAME`.
 This can be done through the Cloudflare console or using wrangler:
 ```bash
 wrangler secret put BUCKET_NAME
@@ -97,7 +105,7 @@ wrangler publish
 ### Usage
 
 Utilize the worker's endpoint to access your files in your private bucket!
-This can be done in the browser, through a shell program, or anything that uses HTTPS.  
+This can be done in the browser, through a shell program, or anything that uses HTTPS.
 The worker handles the middleware between your browser, the Cloudflare cache, and the B2 bucket.
 
 ```bash

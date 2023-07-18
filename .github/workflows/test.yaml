@@ -1,0 +1,26 @@
+name: Test
+on:
+  pull_request:
+
+jobs:
+  test:
+    permissions:
+      contents: write # to be able to publish a GitHub release
+      issues: write # to be able to comment on released issues
+      pull-requests: write # to be able to comment on released pull requests
+      id-token: write # to enable use of OIDC for npm provenance (May not be needed for this project)
+    runs-on: ubuntu-22.04
+    steps:
+    - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
+    - name: Setup Node
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: '.nvmrc'
+    - run: npm install
+    - name: Add wrangler.toml
+      run: cp test/wrangler.toml.test wrangler.toml
+    - run: npm run test
+      env:
+        AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
