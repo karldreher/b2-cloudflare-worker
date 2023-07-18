@@ -45,8 +45,11 @@ npm run dev
 
 
 ## Deployment
+### Cloudflare - Prereqs
+You will need a `CLOUDFLARE_API_TOKEN` set as an environment variable.  It is recommended to use the "Edit Workers" template.
 
-### Generating the authorization value
+
+### B2 - Generating the authorization value
 
 1. Within Backblaze, add an application key for your bucket.
 2. Select the appropriate bucket (not "All" unless you know what you're doing)

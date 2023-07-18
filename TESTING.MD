@@ -6,7 +6,9 @@ The automated tests utilize Mocha, Supertest, and Chai.  Because of that, they a
 
 ## Setup
 
-When developing locally, it is required to follow the instructions in [README.MD](README.md) to set up the Backblaze B2 bucket, the Application Key, and the basic setup required to test Workers in cloudflare.
+It is recommended that you utilize NVM to manage your Node versions for this project.  Once you do, you can utilize `nvm use` to set the Node version specified by `.nvmrc`.  From there, install the packages using `npm install`.
+
+When developing locally, it is required to follow the instructions in [README.MD](README.md) to set up the Backblaze B2 bucket, the Cloudflare Application Key and Token, and the basic setup required to test Workers in cloudflare.
 
 This also includes setting up the wrangler.toml in the top-level of this repo. When setting `CACHE_CONTROL` within wrangler.toml, it is reccomended to use a small `max-age` value (e.g. 1000) so the test can be run repeatedly, while verifying that the first test gets an uncached hit.
 
