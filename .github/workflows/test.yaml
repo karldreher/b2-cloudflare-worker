@@ -33,7 +33,7 @@ jobs:
 
         EOF
 
-    - run: npm run test-ci
+    - run: npm run test
       env:
         AUTH_HEADER: ${{ secrets.AUTH_HEADER }}
         CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
