@@ -33,4 +33,4 @@ jobs:
 
         EOF
 
-    - run: npm run test
+    - run: npm run test-ci
