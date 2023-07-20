@@ -5,19 +5,15 @@ const expect = require("chai").expect;
 const toml = require('toml');
 const fs = require('fs')
 
-function delay(interval) {
-    return it('Wait before continuing', done => {
-        setTimeout(() => done(), interval)
-    }).timeout(interval + 100)
-}
-
 describe("Request a valid file", function () {
     it("Gets 200 response", async function () {
         const response = await request.get(config.filename);
         expect(response.status).to.eql(200);
     });
 
-    delay(5000)
+    it('Wait before continuing', done => {
+        setTimeout(() => done(), 1200)
+    }).timeout(1300)
 
     describe("Repeat the request", function () {
         it('Response gets a cache hit', async function () {
