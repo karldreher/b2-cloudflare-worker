@@ -38,7 +38,7 @@ CACHE_CONTROL = "public,max-age=172800" #This should be here anyway, it is inclu
 While developing locally, it is appropriate to set AUTH_HEADER as an environment variable, which will be passed to wrangler appropriately using `predev` script in package.json.
 Example:
 ```
-export AUTH_HEADER="BASIC dXNlcm5hbWU6cGFzc3dvcmQK
+export AUTH_HEADER="BASIC dXNlcm5hbWU6cGFzc3dvcmQK"
 npm run dev
 ```
 
@@ -46,7 +46,7 @@ npm run dev
 
 ## Deployment
 ### Cloudflare - Prereqs
-You will need a `CLOUDFLARE_API_TOKEN` set as an environment variable.  It is recommended to use the "Edit Workers" template.
+You will need a `CLOUDFLARE_API_TOKEN` set as an environment variable.  It is recommended to use the "Edit Workers" template for this token, when setting it up.
 
 
 ### B2 - Generating the authorization value
@@ -54,7 +54,7 @@ You will need a `CLOUDFLARE_API_TOKEN` set as an environment variable.  It is re
 1. Within Backblaze, add an application key for your bucket.
 2. Select the appropriate bucket (not "All" unless you know what you're doing)
 3. Select "Read Only"
-4. Provide a duration less than 1000 days in the future, specified in seconds. Since this will need to rotate, it is reccomended (for this application's purpose) a maximum value of `86400000`.
+4. Provide a duration less than 1000 days in the future, specified in seconds. Since this will need to rotate, it is reccomended (for this application's purpose) a maximum value of `86400000`.  (As of this writing it is possible to create a application key without expiration)
 
 Upon creating the app key, use the **values** for `keyID` and `applicationKey` by Backblaze to generate the base-64 encoded Basic authorization header:
 
