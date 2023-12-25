@@ -7,11 +7,12 @@ async function authorizeAccount(auth: BasicAuthType): Promise<Account> {
             },
         }
     )
-    //todo better typing https://www.backblaze.com/apidocs/b2-authorize-account
-    const j = await getAccount.json() as any;
+    if (getAccount.status == 401){
+        return { downloadUrl: null, authorizationToken: "none", status: getAccount.status } as Account
+    }
+    const j = await getAccount.json() as B2AuthResponse;
     //https://www.backblaze.com/b2/docs/b2_authorize_account.html
-    //Note, the auth will be valid for 24 hours.  right now this is called every time, on next update should be stored in KV and ideally cron'd
-    const account = { downloadUrl: j.downloadUrl, authorizationToken: j.authorizationToken } as Account
+    const account = { downloadUrl: j.downloadUrl, authorizationToken: j.authorizationToken, status: getAccount.status } as Account
     return account;
 }
 

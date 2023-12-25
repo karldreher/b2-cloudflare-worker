@@ -2,7 +2,7 @@
 
 This document gives instructions for developers to utilize the automated tests.
 
-The automated tests utilize Mocha, Supertest, and Chai.  Because of that, they also require Node.js be installed.  (The project itself is raw Javascript and does not require Node.)
+The automated tests utilize Mocha, Supertest, and Chai.  
 
 ## Setup
 
