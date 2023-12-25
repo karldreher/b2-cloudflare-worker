@@ -17,10 +17,9 @@ export default {
 			if (account.status == 401){
 				return new Response("Error: AUTH_HEADER is not correctly set",{status:401})
 			}
-			//Bucket name comes from environment variable
 			//Request URL to B2 must contain the download URL returned from authorize account, then the path /file/{bucketname}/{pathname}
 			const requestURL = new URL(
-				account.downloadUrl + "/file/" + env.BUCKET_NAME + url.pathname
+				account.downloadUrl! + "/file/" + env.BUCKET_NAME + url.pathname
 			);
 			const params = { b2CacheControl: env.CACHE_CONTROL };
 			requestURL.search = new URLSearchParams(params).toString();
