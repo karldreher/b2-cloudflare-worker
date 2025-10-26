@@ -12,6 +12,10 @@ type Account = {
     status: number
 }
 type B2AuthResponse = {
-    downloadUrl?: B2DownloadUrl,
+    apiInfo?: {
+        storageApi?: {
+            downloadUrl?: B2DownloadUrl
+        }
+    },
     authorizationToken?: string
 }

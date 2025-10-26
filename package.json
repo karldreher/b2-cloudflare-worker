@@ -14,7 +14,6 @@
   "scripts": {
     "deploy": "wrangler deploy",
     "start": "wrangler dev",
-    "predev": "echo AUTH_HEADER=$AUTH_HEADER>.dev.vars",
     "dev": "npm run start",
     "test": "concurrently --timings --success first --kill-others \"npm run dev\" \"wait-on -t 30000 http-get://127.0.0.1:8787 && mocha\""
   },
@@ -28,6 +27,6 @@
     "toml": "^3.0.0",
     "typescript": "^5.3.3",
     "wait-on": "^7.2.0",
-    "wrangler": "^3.22.1"
+    "wrangler": "^4.45.0"
   }
 }

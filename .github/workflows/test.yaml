@@ -19,8 +19,8 @@ jobs:
       with:
         node-version-file: '.nvmrc'
     - run: npm install
-    - name: Add wrangler.toml
-      run: cp test/wrangler.toml.test wrangler.toml
+    - name: Add wrangler.jsonc
+      run: cp test/wrangler.jsonc.test wrangler.jsonc
     - run: npm run test
       env:
         AUTH_HEADER: ${{ secrets.AUTH_HEADER }}

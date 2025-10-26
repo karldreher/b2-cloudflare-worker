@@ -2,7 +2,6 @@
 const config = process.env.CI ? require('./ci.env') : require('./test.env')
 const request = require("supertest")(config.endpoint);
 const expect = require("chai").expect;
-const toml = require('toml');
 const fs = require('fs')
 
 describe("Request a valid file", function () {
@@ -25,7 +24,7 @@ describe("Request a valid file", function () {
         it('Response cache-control matches the configured value in wrangler.toml', async function () {
             const response = await request.get(config.filename);
             expect(response.status).to.eql(200);
-            cacheControlValue = toml.parse(fs.readFileSync('./wrangler.toml')).vars.CACHE_CONTROL
+            cacheControlValue = JSON.parse(fs.readFileSync('./wrangler.jsonc')).vars.CACHE_CONTROL
             expect(response.headers['cache-control']).to.equal(cacheControlValue);
         });
     });
