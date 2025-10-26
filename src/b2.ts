@@ -1,6 +1,6 @@
 async function authorizeAccount(auth: BasicAuthType): Promise<Account> {
     const getAccount = await fetch(
-        "https://api.backblazeb2.com/b2api/v2/b2_authorize_account",
+        "https://api.backblazeb2.com/b2api/v4/b2_authorize_account",
         {
             headers: {
                 Authorization: auth,
