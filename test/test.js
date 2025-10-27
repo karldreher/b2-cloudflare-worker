@@ -1,8 +1,13 @@
-// Config is test.env, unless variable "CI" is set, then use ci.env.
-const config = process.env.CI ? require('./ci.env') : require('./test.env')
+const config = {
+    endpoint: "http://127.0.0.1:8787",
+    // Replace with a real filename from your bucket
+    filename: "/bucket-path-to/example.file",
+    // Replace with a filename that does not exist in your bucket
+    invalidfile: "/invalid-file-12345.jpg"
+}
 const request = require("supertest")(config.endpoint);
 const expect = require("chai").expect;
-const fs = require('fs')
+const wranglerConfig = require("../wrangler.jsonc");
 
 describe("Request a valid file", function () {
     it("Gets 200 response", async function () {
@@ -21,10 +26,10 @@ describe("Request a valid file", function () {
             expect(response.headers['cf-cache-status']).to.equal('HIT');
         });
 
-        it('Response cache-control matches the configured value in wrangler.toml', async function () {
+        it('Response cache-control matches the configured value in wrangler.jsonc', async function () {
             const response = await request.get(config.filename);
             expect(response.status).to.eql(200);
-            cacheControlValue = JSON.parse(fs.readFileSync('./wrangler.jsonc')).vars.CACHE_CONTROL
+            cacheControlValue = wranglerConfig.vars.CACHE_CONTROL
             expect(response.headers['cache-control']).to.equal(cacheControlValue);
         });
     });
