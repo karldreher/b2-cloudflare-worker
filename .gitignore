@@ -1,3 +1,5 @@
+*.d.ts
+wrangler.jsonc
 /target
 /dist
 **/*.rs.bk

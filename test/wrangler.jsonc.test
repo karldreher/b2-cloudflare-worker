@@ -1,0 +1,10 @@
+{
+  "name": "b2-cloudflare-worker",
+  "main": "src/worker.ts",
+  "compatibility_date": "2023-07-10",
+  "workers_dev": true,
+  "vars": {
+    "BUCKET_NAME": "cloudflare-proxy-test",
+    "CACHE_CONTROL": "public,max-age=1000"
+  }
+}
