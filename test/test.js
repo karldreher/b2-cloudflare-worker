@@ -1,13 +1,9 @@
-const config = {
-    endpoint: "http://127.0.0.1:8787",
-    // Replace with a real filename from your bucket
-    filename: "/bucket-path-to/example.file",
-    // Replace with a filename that does not exist in your bucket
-    invalidfile: "/invalid-file-12345.jpg"
-}
+const config = process.env.CI ? require('./ci.env') : require('./test.env');
 const request = require("supertest")(config.endpoint);
 const expect = require("chai").expect;
-const wranglerConfig = require("../wrangler.jsonc");
+const fs = require("fs");
+const { parse } = require("jsonc-parser");
+const wranglerConfig = parse(fs.readFileSync("./wrangler.jsonc", "utf-8"));
 
 describe("Request a valid file", function () {
     it("Gets 200 response", async function () {
